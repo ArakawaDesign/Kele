@@ -39,6 +39,17 @@ class Kele
     @messages = JSON.parse(response.body)
   end
   
+  def create_message(recipient_id, subject, message)
+    response = self.class.post(api_url("messages"), 
+      body: { 
+        "user_id": id, 
+        "recipient_id": recipient_id, 
+        "subject": subject, 
+        "stripped-text": message }, 
+      headers: { "authorization" => @auth_token })
+    puts response
+  end
+  
   private
   def api_url(end_point)
     "https://www.bloc.io/api/v1/#{end_point}"
